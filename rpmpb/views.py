@@ -3,6 +3,11 @@ from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
+from django.views import generic
+from django.views.generic.edit import DeleteView
+from django.urls import reverse_lazy
+from django.views.generic.edit import CreateView
+from django.views.generic.edit import UpdateView
 
 from .models import Miniature
 from .models import Album
@@ -14,22 +19,46 @@ def index(request):
     return render(request, 'rpmpb/index.html', context)
 
 
-def mini_index(request):
-    minis = Miniature.objects.order_by('name')
-    context = {'minis': minis}
-    return render(request, 'rpmpb/mini_index.html', context)
+class MiniatureIndexView(generic.ListView):
+    template_name = 'rpmpb/mini_index.html'
+    context_object_name = 'minis'
+
+    def get_queryset(self):        
+        return Miniature.objects.order_by('name')
 
 
-def mini_detail(request, slug):
-    mini = get_object_or_404(Miniature, slug_name=slug)
-    context = {'mini': mini}
-    return render(request, 'rpmpb/mini_detail.html', context)
+class MiniatureDetailView(generic.DetailView):
+    model = Miniature
+    template_name = 'rpmpb/mini_detail.html'
 
+    def get_slug_field(self):
+        return 'slug_name'
 
-def album_index(request):
-    albums = Album.objects.order_by('name')
-    context = {'albums': albums}
-    return render(request, 'rpmpb/album_index.html', context)
+class MiniatureDeleteView(DeleteView):
+    model = Miniature
+    success_url = reverse_lazy('rpmpb:mini-index')
+
+    def get_slug_field(self):
+        return 'slug_name'
+
+class MiniatureCreateView(CreateView):
+    model = Miniature
+    fields = ['slug_name', 'name', 'description', 'tags']
+
+class MiniatureUpdate(UpdateView):
+    model = Miniature
+    fields = ['slug_name', 'name', 'description', 'tags']
+    template_name_suffix = '_update_form'
+
+    def get_slug_field(self):
+        return 'slug_name'
+
+class AlbumIndexView(generic.ListView):
+    template_name = 'rpmpb/album_index.html'
+    context_object_name = 'albums'
+
+    def get_queryset(self):        
+        return Album.objects.order_by('name')
 
 
 def album_detail(request, slug):

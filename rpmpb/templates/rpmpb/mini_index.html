@@ -1,5 +1,8 @@
 <h1>Miniatures Index</h1>
 
+<a href="{% url 'rpmpb:mini-create' %}">New miniature</a>
+
+
 {% if minis %}
     <ul>
     {% for mini in minis %}
@@ -7,6 +10,7 @@
             <a href="{% url 'rpmpb:mini-detail'  mini.slug_name %}">
                 {{ mini.name }}
             </a>
+            <a href="{% url 'rpmpb:mini-delete' mini.slug_name %}">(Delete)</a>
         </li>
     {% endfor %}
     </ul>

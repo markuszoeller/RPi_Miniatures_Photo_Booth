@@ -1,4 +1,4 @@
-<h1>{{ mini }}</h1>
+<h1>{{ miniature }}</h1>
 
 {% if error_message %}
 <p>
@@ -6,14 +6,22 @@
 </p>
 {% endif %}
 
+<p>
+	<a href="{% url 'rpmpb:mini-index' %}">Back to list</a>
+</p>
+
+<p>
+	<a href="{% url 'rpmpb:mini-delete' miniature.slug_name %}">Delete</a>
+</p>
+
 <div>
-Description: {{ mini.description }}
+Description: {{ miniature.description }}
 </div>
 
 <div>
 Tags:
 <ul>
-    {% for tag in mini.tags.all %}
+    {% for tag in miniature.tags.all %}
     <li>
         <a href="{% url 'rpmpb:tag-detail'  tag.slug_name %}">
             {{ tag }}
@@ -27,7 +35,7 @@ Tags:
 <div>
 Belongs to these albums:
 <ul>
-    {% for album in mini.album_set.all %}
+    {% for album in miniature.album_set.all %}
     <li>
         <a href="{% url 'rpmpb:album-detail' album.slug_name %}">
             {{ album.name }}
