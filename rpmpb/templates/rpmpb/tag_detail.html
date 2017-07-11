@@ -1,0 +1,27 @@
+<h1>{{ tag }}</h1>
+
+<div>
+Applied to these albums:
+<ul>
+    {% for album in tag.album_set.all %}
+    <li>
+        <a href="{% url 'rpmpb:album-detail' album.slug_name %}">
+            {{ album }}
+        </a>
+    </li>
+    {% endfor %}
+</ul>
+</div>
+
+<div>
+Applied to these miniatures:
+<ul>
+    {% for mini in tag.miniature_set.all %}
+    <li>
+        <a href="{% url 'rpmpb:mini-detail' mini.slug_name %}">
+            {{ mini }}
+        </a>
+    </li>
+    {% endfor %}
+</ul>
+</div>

@@ -1,0 +1,38 @@
+<h1>{{ mini }}</h1>
+
+{% if error_message %}
+<p>
+	<strong>{{ error_message }}</strong>
+</p>
+{% endif %}
+
+<div>
+Description: {{ mini.description }}
+</div>
+
+<div>
+Tags:
+<ul>
+    {% for tag in mini.tags.all %}
+    <li>
+        <a href="{% url 'rpmpb:tag-detail'  tag.slug_name %}">
+            {{ tag }}
+        </a>
+    </li>
+    {% endfor %}
+</ul>
+</div>
+
+
+<div>
+Belongs to these albums:
+<ul>
+    {% for album in mini.album_set.all %}
+    <li>
+        <a href="{% url 'rpmpb:album-detail' album.slug_name %}">
+            {{ album.name }}
+        </a>
+    </li>
+    {% endfor %}
+</ul>
+</div>

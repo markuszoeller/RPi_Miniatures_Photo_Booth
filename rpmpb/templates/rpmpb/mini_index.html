@@ -1,0 +1,15 @@
+<h1>Miniatures Index</h1>
+
+{% if minis %}
+    <ul>
+    {% for mini in minis %}
+        <li>
+            <a href="{% url 'rpmpb:mini-detail'  mini.slug_name %}">
+                {{ mini.name }}
+            </a>
+        </li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No miniatures are available.</p>
+{% endif %}

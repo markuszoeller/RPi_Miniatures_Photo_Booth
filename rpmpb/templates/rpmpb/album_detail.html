@@ -1,0 +1,38 @@
+<h1>{{ album }}</h1>
+
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<p>
+	<a href="{% url 'rpmpb:album-index' %}">Back to albums</a>
+</p>
+
+<form action="{% url 'rpmpb:album-detail' album.slug_name %}" method="post">
+{% csrf_token %}
+    <input type="text" name="album-slug" id="album-slug" value="{{ album.slug_name }}" />
+    <br />
+    <input type="text" name="album-name" id="album-name" value="{{ album.name }}" />
+    <br />
+
+{% if album.slug_name == "new" %}
+<input type="submit" value="create" />
+{% else %}
+<input type="submit" value="update" />
+{% endif %}
+
+</form>
+
+<div>
+Contains these miniatures:
+<ul>
+	{% if 'miniatures' in album %}
+    {% for mini in album.miniatures.all %}
+    <li>
+        <a href="{% url 'rpmpb:mini-detail'  mini.slug_name %}">
+            {{ mini }}
+        </a>
+    </li>
+    {% endfor %}
+    {% endif %}
+</ul>
+</div>

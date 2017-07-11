@@ -1,0 +1,17 @@
+<h1>Albums</h1>
+
+<a href="{% url 'rpmpb:album-detail' 'new' %}">NEW</a>
+
+{% if albums %}
+<ul>
+{% for album in albums %}
+    <li>
+        <a href="{% url 'rpmpb:album-detail'  album.slug_name %}">
+            {{ album.name }}
+        </a>
+    </li>
+{% endfor %}
+</ul>
+{% else %}
+<p>No albums are available.</p>
+{% endif %}
