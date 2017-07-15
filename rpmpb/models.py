@@ -45,6 +45,7 @@ class Album(models.Model):
     description = models.CharField(max_length=2000, default="", blank=True)
     miniatures = models.ManyToManyField(Miniature, blank=True)
     tags = models.ManyToManyField(Tag, blank=True)
+    albums = models.ManyToManyField("self", blank=True, null=True)
 
     def __str__(self):
         return self.name
